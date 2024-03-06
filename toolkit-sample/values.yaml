@@ -1,0 +1,96 @@
+replicaCount: 1
+image:
+  repository: marsdeimos/cloud-jpa
+  pullPolicy: IfNotPresent
+  tag: "2.9.1"
+imagePullSecrets: []
+podAnnotations: {}
+service:
+  type: ClusterIP
+  port: 8080
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+resources:
+  requests:
+    cpu: 100m
+    memory: 512Mi
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 85
+  targetMemoryUtilizationPercentage: 85
+nodeSelector: {}
+tolerations: []
+affinity: {}
+env:
+  - name: DB_USER
+    valueFrom:
+      secretKeyRef:
+        name: db-credentials
+        key: user
+  - name: DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: db-credentials
+        key: password
+  - name: DB_URL
+    value: jdbc:oracle:thin:@oracle-db.db:1521/FREE
+  - name: LOG_LEVEL
+    value: INFO
+network:
+  Apppath: /toolkit-sample
+properties:
+  application.yml: |-
+    spring:
+      application:
+        name: toolkit-sample
+      autoconfigure:
+        exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+      datasource:
+        password: ${DB_PASSWORD}
+        url: ${DB_URL}
+        username: ${DB_USER}
+        hikari:
+          connection-timeout: 20000
+          minimum-idle: 1
+          maximum-pool-size: 10
+          idle-timeout: 30000
+      jpa:
+        open-in-view: false
+        hibernate:
+          ddl-auto: none
+        properties:
+          hibernate:
+            cache:
+              use_second_level_cache: false
+              use_query_cache: false
+      profiles:
+        active: kubernetes
+    springdoc:
+      swagger-ui:
+        path: /swagger-ui.html
+    server:
+      servlet:
+        context-path: /toolkit-sample
+    management:
+      endpoint:
+        health:
+          probes:
+            enabled: true
+    otel:
+      instrumentation:
+        logback-appender:
+          experimental-log-attributes: true
+          experimental:
+            capture-marker-attribute: true
