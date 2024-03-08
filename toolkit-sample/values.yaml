@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   repository: marsdeimos/cloud-jpa
   pullPolicy: IfNotPresent
-  tag: "2.9.2"
+  tag: "2.9.3"
 imagePullSecrets: []
 podAnnotations: {}
 service:
@@ -94,3 +94,12 @@ properties:
           experimental-log-attributes: true
           experimental:
             capture-marker-attribute: true
+      exporter:
+        otlp:
+          endpoint: http://otel-collector-opentelemetry-collector.otel:4317
+          logs:
+            endpoint: http://otel-collector-opentelemetry-collector.otel:4317
+          metrics:
+            endpoint: http://otel-collector-opentelemetry-collector.otel:4317
+          traces:
+            endpoint: http://otel-collector-opentelemetry-collector.otel:4317
