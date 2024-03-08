@@ -97,9 +97,9 @@ properties:
       exporter:
         otlp:
           endpoint: http://otel-collector-opentelemetry-collector.otel:4318
-      #     logs:
-      #       endpoint: http://otel-demo-otelcol.otel:4317
-      #     metrics:
-      #       endpoint: http://otel-demo-otelcol.otel:4317
-      #     traces:
-      #       endpoint: http://otel-demo-otelcol.otel:4317
+          logs:
+            endpoint: http://otel-demo-otelcol.otel:4318
+          metrics:
+            endpoint: http://otel-demo-otelcol.otel:4318
+          traces:
+            endpoint: http://otel-demo-otelcol.otel:4318
