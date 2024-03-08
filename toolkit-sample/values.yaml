@@ -96,7 +96,7 @@ properties:
             capture-marker-attribute: true
       exporter:
         otlp:
-          endpoint: http://otel-demo-otelcol.otel:4317
+          endpoint: http://otel-collector-opentelemetry-collector.otel:4317
       #     logs:
       #       endpoint: http://otel-demo-otelcol.otel:4317
       #     metrics:
