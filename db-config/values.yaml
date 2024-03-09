@@ -8,6 +8,3 @@ env:
 image:
   repository: container-registry-saopaulo.oracle.com/database/free
   tag: 23.3.0.0
-secret:
-  user: U1lTVEVN
-  password: VGVzdE0xMjM=
