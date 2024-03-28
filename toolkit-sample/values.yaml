@@ -55,8 +55,6 @@ properties:
     spring:
       application:
         name: toolkit-sample
-      autoconfigure:
-        exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
       datasource:
         password: ${DB_PASSWORD}
         url: ${DB_URL}
@@ -70,11 +68,6 @@ properties:
         open-in-view: false
         hibernate:
           ddl-auto: none
-        properties:
-          hibernate:
-            cache:
-              use_second_level_cache: false
-              use_query_cache: false
       profiles:
         active: kubernetes
     springdoc:
@@ -84,25 +77,13 @@ properties:
       servlet:
         context-path: /toolkit-sample
     management:
-      endpoint:
-        health:
-          probes:
-            enabled: true
-    otel:
-      instrumentation:
-        logback-appender:
-          experimental-log-attributes: true
-          experimental:
-            capture-marker-attribute: true
+      endpoints:
+        web:
+          exposure:
+            include: health, metrics, prometheus
+      metrics:
+        tags:
+          application: ${spring.application.name}
       resource:
         attributes:
-          environment: local
-      exporter:
-        otlp:
-          endpoint: http://otel-collector-opentelemetry-collector.otel:4318
-          # logs:
-          #   endpoint: http://otel-collector-opentelemetry-collector.otel:4318/v1/logs
-          # metrics:
-          #   endpoint: http://otel-collector-opentelemetry-collector.otel:4318/v1/metrics
-          # traces:
-          #   endpoint: http://otel-collector-opentelemetry-collector.otel:4318/v1/traces
+          environment: kubernetes
