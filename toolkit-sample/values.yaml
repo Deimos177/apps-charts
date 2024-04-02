@@ -1,8 +1,8 @@
 replicaCount: 1
 image:
-  repository: marsdeimos/cloud-jpa
+  repository: marsdeimos/toolkit-sample
   pullPolicy: IfNotPresent
-  tag: "2.9.4"
+  tag: "13"
 imagePullSecrets: []
 podAnnotations: {}
 service:
