@@ -8,6 +8,6 @@ spec:
     matchLabels:
       app: {{ .Release.Name }}
   endpoints:
-  - port: {{ .Values.service.port }}
+  - port: "{{ .Values.service.port }}"
     path: {{ .Values.network.Apppath }}/actuator/metrics
     interval: 10s
